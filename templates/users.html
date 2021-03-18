@@ -1,0 +1,25 @@
+<h3>Users</h3>
+Total of {{ usercount }} registered users.
+
+<hr>
+
+<table>
+<tr>
+<td>username:</td>
+<td>profile created:</td>
+</tr>
+{% for user in users %}
+<tr>
+<td>{{ user[0] }}</td>
+<td>{{ user[1].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<hr>
+
+{% if session.user_id %}
+<a href="/">Etusivulle</a> | <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/">Kirjaudu sisään</a>
+{% endif %}

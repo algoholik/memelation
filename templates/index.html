@@ -1,16 +1,39 @@
+{% if session.user_id %}
+
+<h1>Memelation</h1>
 Viestien määrä: {{ count }}
 <hr>
+
+<table>
 {% for message in messages %}
-<i>Viesti:</i> {{ message[0] }}
-<p>
-<i>Lähettäjä:</i> {{ message[1] }}
-<p>
-<i>Aika:</i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
-<hr>
+<tr>
+    <td>{{ message[2].strftime("%Y-%m-%d %H:%M") }}</td>
+    <td>{{ message[1] }}</td>
+    <td>{{ message[0] }}</td>
+</tr>
 {% endfor %}
-{% if session.user_id %}
+</table>
+<hr/>
+
 Olet kirjautunut sisään.
-<a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+<form action="/send" method="post">
+    Viesti: <br>
+    <textarea name="content" rows="3" cols="40"></textarea>
+    <br>
+    <input type="submit" value="Lähetä">
+</form>
+<br/><a href="/users">Käyttäjät</a> | <a href="/logout">Kirjaudu ulos</a>
+
 {% else %}
-<a href="/login">Kirjaudu sisään</a>
+
+<h3>Kirjaudu sisään nähdäksesi tämän sivun</h3>
+<form action="/login" method="post">
+    Tunnus: <input type="text" name="username">
+    <p>
+    Salasana: <input type="password" name="password">
+    <p>
+    <input type="submit" value="Kirjaudu">
+    </form>
+    Jos sinulla ei ole tunnusta, voit luoda uuden tunnuksen <a href="/register">tästä</a>
+
 {% endif %}

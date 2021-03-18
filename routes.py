@@ -2,48 +2,49 @@ from app import app
 from flask import render_template, request, redirect
 import messages, users
 
-@app.route("/")
+@app.route('/')
 def index():
     list = messages.get_list()
-    return render_template("index.html", count=len(list), messages=list)
+    return render_template('index.html', count=len(list), messages=list)
 
-@app.route("/new")
-def new():
-    return render_template("new.html")
+@app.route('/users')
+def userlist():
+    userlist = users.get_users()
+    return render_template('users.html', usercount=len(userlist), users=userlist)
 
-@app.route("/send", methods=["post"])
+@app.route("/send", methods=['POST'])
 def send():
-    content = request.form["content"]
+    content = request.form['content']
     if messages.send(content):
-        return redirect("/")
+        return redirect('/')
     else:
-        return render_template("error.html",message="Viestin lähetys ei onnistunut")
+        return render_template('error.html', message='Viestin lähetys ei onnistunut')
 
-@app.route("/login", methods=["get","post"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
+    if request.method == 'GET':
+        return render_template('login.html')
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form['username']
+        password = request.form['password']
         if users.login(username,password):
-            return redirect("/")
+            return redirect('/')
         else:
-            return render_template("error.html",message="Väärä tunnus tai salasana")
+            return render_template('error.html', message='Väärä tunnus tai salasana')
 
-@app.route("/logout")
+@app.route('/logout')
 def logout():
     users.logout()
-    return redirect("/")
+    return redirect('/')
 
-@app.route("/register", methods=["get","post"])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == "GET":
-        return render_template("register.html")
+    if request.method == 'GET':
+        return render_template('register.html')
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        if users.register(username,password):
-            return redirect("/")
+        username = request.form['username']
+        password = request.form['password']
+        if users.register(username, password):
+            return redirect('/')
         else:
-            return render_template("error.html",message="Rekisteröinti ei onnistunut")
+            return render_template('error.html', message='Rekisteröinti ei onnistunut')
