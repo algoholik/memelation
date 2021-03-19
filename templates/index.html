@@ -1,21 +1,21 @@
-{% if session.user_id %}
-
 <h1>Memelation</h1>
-Viestien määrä: {{ count }}
 <hr>
 
+{% if session.user_id %}
+Viestien määrä: {{ count }}
+
 <table>
-{% for message in messages %}
+{% for meme in memes %}
 <tr>
-    <td>{{ message[2].strftime("%Y-%m-%d %H:%M") }}</td>
-    <td>{{ message[1] }}</td>
-    <td>{{ message[0] }}</td>
+    <td>{{ meme[2].strftime("%Y-%m-%d %H:%M") }}</td>
+    <td>{{ meme[1] }}</td>
+    <td>{{ meme[0] }}</td>
 </tr>
 {% endfor %}
 </table>
 <hr/>
 
-Olet kirjautunut sisään.
+Olet kirjautunut sisään, {{ username }}.
 <form action="/send" method="post">
     Viesti: <br>
     <textarea name="content" rows="3" cols="40"></textarea>
@@ -26,14 +26,15 @@ Olet kirjautunut sisään.
 
 {% else %}
 
-<h3>Kirjaudu sisään nähdäksesi tämän sivun</h3>
+<h3>Kirjaudu sisään</h3>
+
 <form action="/login" method="post">
-    Tunnus: <input type="text" name="username">
-    <p>
-    Salasana: <input type="password" name="password">
-    <p>
-    <input type="submit" value="Kirjaudu">
-    </form>
-    Jos sinulla ei ole tunnusta, voit luoda uuden tunnuksen <a href="/register">tästä</a>
+    <p>Tunnus: <input type="text" name="username">
+    <p>Salasana: <input type="password" name="password">
+    <p><input type="submit" value="Kirjaudu">
+    <p>{{ msg_loginfailed }}
+</form>
+<hr/>
+Ei tunnusta? <a href="/register">Rekisteröidy</a>
 
 {% endif %}

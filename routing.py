@@ -1,11 +1,12 @@
 from app import app
 from flask import render_template, request, redirect
-import messages, users
+import memes, users
 
 @app.route('/')
 def index():
-    list = messages.get_list()
-    return render_template('index.html', count=len(list), messages=list)
+    list = memes.get_list()
+    username = users.user_name()
+    return render_template('index.html', username=username, count=len(list), memes=list)
 
 @app.route('/users')
 def userlist():
@@ -15,7 +16,7 @@ def userlist():
 @app.route("/send", methods=['POST'])
 def send():
     content = request.form['content']
-    if messages.send(content):
+    if memes.send(content):
         return redirect('/')
     else:
         return render_template('error.html', message='Viestin lähetys ei onnistunut')
@@ -27,10 +28,10 @@ def login():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
-        if users.login(username,password):
+        if users.login(username, password):
             return redirect('/')
         else:
-            return render_template('error.html', message='Väärä tunnus tai salasana')
+            return render_template('index.html', msg_loginfailed='Väärä tunnus tai salasana')
 
 @app.route('/logout')
 def logout():
