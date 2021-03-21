@@ -1,5 +1,5 @@
 # Memelation
-##-A simple image forum for memes
+- A simple image forum for sharing and discussing memes.
 
 Preliminary features:
 
