@@ -1,0 +1,14 @@
+<h3>Meme</h3>
+
+<hr>
+
+<img src="/meme/img/{{ meme_id }}"/>
+<br/>
+
+<hr>
+
+{% if session.user_id %}
+<a href="/">Etusivulle</a> | <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/">Kirjaudu sisään</a>
+{% endif %}

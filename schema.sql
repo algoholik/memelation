@@ -14,16 +14,11 @@ CREATE TABLE userprofiles (
 
 CREATE TABLE memes (
     id SERIAL PRIMARY KEY,
+    filename TEXT,
     content TEXT,
     user_id INTEGER REFERENCES users,
     visible BOOLEAN DEFAULT TRUE,
-    created TIMESTAMP
-);
-
-CREATE TABLE images (
-    id SERIAL PRIMARY KEY,
-    meme_id INTEGER REFERENCES memes,
-    filename TEXT,
+    created TIMESTAMP,
     img_data BYTEA
 );
 

@@ -6,11 +6,20 @@ def get_list():
     result = database.session.execute(sql)
     return result.fetchall()
 
-def send(content):
+def send(img_data, img_filename, content):
     user_id = users.user_id()
-    if user_id == 0:
-        return False
-    sql = 'INSERT INTO memes (content, user_id, created) VALUES (:content, :user_id, NOW())'
-    database.session.execute(sql, {'content': content, 'user_id': user_id})
+    if user_id == 0: return False
+    visible = True
+    sql = 'INSERT INTO memes (filename, content, user_id, visible, created, img_data) VALUES (:filename, :content, :user_id, :visible, NOW(), :img_data) RETURNING id'
+    result = database.session.execute(sql, {'filename': img_filename, 'content': content, 'user_id': user_id, 'visible': visible, 'img_data': img_data})
     database.session.commit()
-    return True
+    meme_id = result.fetchone()[0]
+    return meme_id
+
+def meme_img(meme_id):
+    sql = 'SELECT img_data FROM memes WHERE id=:id'
+    result = database.session.execute(sql, {'id': meme_id})
+    return result.fetchone()[0]
+
+def meme_show(meme_id):
+    pass
