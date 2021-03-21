@@ -19,11 +19,10 @@ def send():
     imgupload = request.files["file"]
     img_filename = imgupload.filename
     img_data = imgupload.read()
-    if not img_filename.endswith(".jpg"): return "Invalid filename"
+    if not img_filename.endswith(".jpg"): return "Only jpg files allowed."
     if len(img_data) > 1024 * 1024: return "Your meme is too heavy! Whydontcha downsize it a bit (or two)?"
     meme_id = memes.send(img_data, img_filename, content)
     return redirect(f'/meme/{meme_id}')
-    # return render_template('error.html', message='Viestin lähetys ei onnistunut')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -35,7 +34,7 @@ def login():
         if users.login(username, password):
             return redirect('/')
         else:
-            return render_template('index.html', msg_loginfailed='Väärä tunnus tai salasana')
+            return render_template('index.html', msg_loginfailed='Wrong username or password!')
 
 @app.route('/logout')
 def logout():
@@ -52,7 +51,7 @@ def register():
         if users.register(username, password):
             return redirect('/')
         else:
-            return render_template('error.html', message='Rekisteröinti ei onnistunut')
+            return render_template('error.html', message='Registration failed.')
 
 @app.route('/meme/img/<int:meme_id>')
 def meme_img(meme_id):

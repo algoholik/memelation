@@ -2,7 +2,7 @@ from database import database
 import users
 
 def get_list():
-    sql = 'SELECT M.content, U.username, M.created FROM memes M, users U WHERE M.user_id=U.id ORDER BY M.id'
+    sql = 'SELECT M.content, U.username, M.created, M.id FROM memes M, users U WHERE M.user_id=U.id ORDER BY M.id'
     result = database.session.execute(sql)
     return result.fetchall()
 

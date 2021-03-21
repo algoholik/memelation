@@ -9,7 +9,7 @@ Total of {{ count }} memes sent.
 <tr>
     <td>{{ meme[2].strftime("%Y-%m-%d %H:%M") }}</td>
     <td>{{ meme[1] }}</td>
-    <td>{{ meme[0] }}</td>
+    <td><a href="/meme/{{meme[3]}}">{{ meme[0] }}</a></td>
 </tr>
 {% endfor %}
 </table>
@@ -17,13 +17,18 @@ Total of {{ count }} memes sent.
 
 Logged in as {{ username }}.
 <form action="/send" method="POST" enctype="multipart/form-data">
-    Message: 
-    <br/>
-    <textarea name="content" rows="3" cols="40"></textarea>
-    <br/>
-    <input type="file" name="file">
-    <br/>
-    <input type="submit" value="Send">
+<table>
+<tr>
+    <td colspan="2">
+        Message:
+        <textarea name="content" rows="3" cols="40"></textarea>
+    </td>
+</tr>
+<tr>
+    <td><input type="file" name="file"></td>
+    <td><input type="submit" value="Send"></td>
+</tr>
+</table>
 </form>
 <br/><a href="/users">Users</a> | <a href="/logout">Logout</a>
 
