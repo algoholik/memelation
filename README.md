@@ -15,7 +15,7 @@ Preliminary features:
     * the memes submitted
     * the overall usage of the service
 * Admin user can manage privileges for users
-* Admin user can create sections on the site and select users that have access
+* Admin user can create sections on the site and control who has access
 * Admin user can moderate images, comments and user profiles
 
 Possible future features to be implemented in- or outside the course scope:
