@@ -21,5 +21,11 @@ def meme_img(meme_id):
     result = database.session.execute(sql, {'id': meme_id})
     return result.fetchone()[0]
 
-def meme_show(meme_id):
-    pass
+def meme_get(meme_id):
+    try:
+        sql = 'SELECT M.id, M.filename, M.content, M.user_id, M.created, U.username FROM users U, memes M WHERE M.id=:id AND M.user_id=U.id AND M.visible=True'
+        result = database.session.execute(sql, {'id': meme_id})
+        return result.fetchone()
+    except:
+        print("ei löydy")
+        return False

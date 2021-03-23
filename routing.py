@@ -62,4 +62,9 @@ def meme_img(meme_id):
 
 @app.route('/meme/<int:meme_id>')
 def meme_show(meme_id):
-    return render_template('meme.html', meme_id=meme_id)
+    if not memes.meme_get(meme_id):
+        return render_template('error.html', message='Meme not found.')
+    else:
+        meme_data = memes.meme_get(meme_id)
+        return render_template('meme.html', meme_data=meme_data)
+

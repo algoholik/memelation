@@ -26,7 +26,7 @@ CREATE TABLE ratings (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
     meme_id INTEGER REFERENCES memes,
-    points INTEGER,
+    points INTEGER DEFAULT 0,
     created TIMESTAMP
 );
 

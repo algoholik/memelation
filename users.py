@@ -38,3 +38,8 @@ def get_users():
     sql = 'SELECT U.username, U.created FROM users U'
     result = database.session.execute(sql)
     return result.fetchall()
+
+def get_user():
+    sql = 'SELECT U.username, U.created FROM users U'
+    result = database.session.execute(sql)
+    return result.fetchall()

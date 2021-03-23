@@ -1,7 +1,23 @@
 <h3>Meme</h3>
 
+# 0 id (meme)
+# 1 filename
+# 2 content
+# 3 user_id
+# 4 created
+# 5 username
+
+
 <hr/>
-<img src="/meme/img/{{ meme_id }}"/>
+<img src="/meme/img/{{ meme_data[0] }}" height="400"/>
+<br/>
+<a href="/meme/img/{{ meme_data[0] }}">{{ meme_data[1] }}</a> | 
+{{meme_data[4].strftime("%Y-%m-%d %H:%M" )}} | 
+<a href="/user/{{ meme_data[5] }}">({{ meme_data[5] }}</a>)
+<br/>
+"{{ meme_data[2] }}"
+<br/>
+
 <hr/>
 
 {% if session.user_id %}
