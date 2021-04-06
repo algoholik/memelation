@@ -9,9 +9,14 @@ def index():
     return render_template('index.html', username=username, count=len(list), memes=list)
 
 @app.route('/users')
-def userlist():
+def users_list():
     userlist = users.get_users()
     return render_template('users.html', usercount=len(userlist), users=userlist)
+
+@app.route('/user/<int:user_id>')
+def user_profile(user_id):
+    userdata = users.get_user_profile(user_id)
+    return render_template('user.html', userdata=userdata)
 
 @app.route("/send", methods=['POST'])
 def send():

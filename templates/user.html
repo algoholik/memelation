@@ -1,18 +1,14 @@
 <h3>User</h3>
-Total of {{ usercount }} registered users.
+User {{ userdata[0] }}
 
 <hr>
 
 <table>
 <tr>
-<td>username:</td>
-<td>profile created:</td>
+<td>item:</td>
 </tr>
-{% for user in users %}
-<tr>
-<td>{{ user[0] }}</td>
-<td>{{ user[1].strftime("%Y-%m-%d %H:%M:%S") }}</td>
-</tr>
+{% for item in userdata %}
+<tr><td>{{ userdata }}</td></tr>
 {% endfor %}
 </table>
 

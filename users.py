@@ -36,10 +36,11 @@ def user_name():
 
 def get_users():
     sql = 'SELECT U.username, U.created FROM users U'
-    result = database.session.execute(sql)
-    return result.fetchall()
+    result = database.session.execute(sql).fetchall()
+    return result
+    #return result.fetchall()
 
-def get_user():
-    sql = 'SELECT U.username, U.created FROM users U'
-    result = database.session.execute(sql)
-    return result.fetchall()
+def get_user_profile(userid):
+    sql = 'SELECT U.username, U.created FROM users U WHERE U.id=:user_id'
+    result = database.session.execute(sql, {'user_id': userid}).fetchone()
+    return result
