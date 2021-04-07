@@ -40,7 +40,15 @@ def get_users():
     return result
     #return result.fetchall()
 
-def get_user_profile(userid):
-    sql = 'SELECT U.username, U.created FROM users U WHERE U.id=:user_id'
-    result = database.session.execute(sql, {'user_id': userid}).fetchone()
-    return result
+def get_user_profile(user_id):
+    userdata = { 'user': None, 'profile': None, 'memes': None, 'comments': None }
+    sql = 'SELECT id, username, created FROM users WHERE id=:user_id'
+    userdata['user'] = database.session.execute(sql, {'user_id': user_id}).fetchone()
+    sql = 'SELECT field_key, field_value FROM userprofiles WHERE user_id=:user_id'
+    userdata['profile'] = database.session.execute(sql, {'user_id': user_id}).fetchall()
+    sql = 'SELECT id, filename, content, created FROM memes WHERE user_id=:user_id'
+    userdata['memes'] = database.session.execute(sql, {'user_id': user_id}).fetchall()
+    sql = 'SELECT meme_id, content, created FROM comments WHERE user_id=:user_id'
+    userdata['comments'] = database.session.execute(sql, {'user_id': user_id}).fetchall()
+    print(userdata)
+    return userdata

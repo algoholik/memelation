@@ -1,15 +1,36 @@
-<h3>User</h3>
-User {{ userdata[0] }}
+<h3>{{ userdata['user'][1] }}</h3>
 
 <hr>
 
 <table>
-<tr>
-<td>item:</td>
-</tr>
-{% for item in userdata %}
-<tr><td>{{ userdata }}</td></tr>
-{% endfor %}
+    <thead><strong>USER INFORMATION</strong></thead>
+    <tr>
+        <td>user name:</td>
+        <td>{{ userdata['user'][1] }}</td>
+    </tr>
+    <tr>
+        <td>user id:</td>
+        <td>{{ userdata['user'][0] }}</td>
+    </tr>
+    <tr>
+        <td>profile created:</td>
+        <td>{{ userdata['user'][2].strftime("%Y-%m-%d %H:%M") }}</td>
+    </tr>
+</table>
+
+<table>
+    <thead><strong>MEMES SUBMITTED</strong></thead>
+    {% for meme in userdata['memes'] %}
+    <tr>
+        <td><a href="/meme/{{ meme[0] }}"><img src="/meme/img/{{ meme[0] }}" height="100"></a></td>
+        <td>
+            <p>
+                <strong><a href="/meme/{{ meme[0] }}">{{ meme[1] }}</a></strong><br>
+                {{ meme[2] }}
+            </p>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
 
 <hr>
