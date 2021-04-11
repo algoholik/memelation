@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template, make_response, request, redirect
+from random import randint
 import memes, users
 
 @app.route('/')
@@ -73,6 +74,11 @@ def register():
             return redirect('/')
         else:
             return render_template('error.html', message='Registration failed.')
+
+@app.route('/meme/random')
+def meme_random():
+    random_id = randint(1, memes.get_meme_amount())
+    return redirect(f"/meme/{random_id}")
 
 @app.route('/meme/img/<int:meme_id>')
 def meme_img(meme_id):

@@ -6,6 +6,11 @@ def get_list():
     result = database.session.execute(sql)
     return result.fetchall()
 
+def get_meme_amount():
+    sql = 'SELECT MAX(id) FROM memes'
+    result = database.session.execute(sql).fetchone()[0]
+    return result
+
 def send(img_data, img_filename, content):
     user_id = users.user_id()
     if user_id == 0: return False
