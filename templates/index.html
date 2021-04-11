@@ -22,10 +22,8 @@
 <div class="main">
 
     <h1>Memelation</h1>
+    <strong>Total of {{ count }} memes submitted.</strong>
 <hr>
-
-
-Total of {{ count }} memes sent.
 
 <table>
 {% for meme in memes %}
@@ -41,16 +39,19 @@ Total of {{ count }} memes sent.
 {% if session.user_id %}
 
 Logged in as {{ username }}.
+<h2>Submit a meme:</h2>
 <form action="/send" method="POST" enctype="multipart/form-data">
 <table>
 <tr>
+    <td><input type="file" name="file" value="Upload a meme"></td>
+</tr>
+    <tr>
     <td colspan="2">
         Message:
         <textarea name="content" rows="3" cols="40"></textarea>
     </td>
 </tr>
 <tr>
-    <td><input type="file" name="file"></td>
     <td><input type="submit" value="Send"></td>
 </tr>
 </table>

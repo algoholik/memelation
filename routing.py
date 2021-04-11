@@ -17,19 +17,21 @@ def users_list():
 @app.route('/user/<int:user_id>')
 def user_profile(user_id):
     userdata = users.get_user_profile(user_id)
-    return render_template('user.html', userdata=userdata)
+    username = users.user_name()
+    return render_template('user.html', username=username, userdata=userdata)
 
 @app.route("/comment", methods=["POST"])
 def comment():
     comment = request.form["comment"]
     meme_id = request.form["meme_id"]
+    username = users.user_name()
     if len(comment) > 0:
         if memes.meme_add_comment(meme_id, comment):
             return redirect(f"/meme/{meme_id}")
         else:
             return "Failed to add comment to database."
     else:
-        return render_template('meme.html', msg_commentfailed='Your comment must contain text!')
+        return render_template('meme.html', username=username, msg_commentfailed='Your comment must contain text!')
 
 @app.route("/send", methods=['POST'])
 def send():
@@ -81,10 +83,11 @@ def meme_img(meme_id):
 
 @app.route('/meme/<int:meme_id>')
 def meme_show(meme_id):
+    username = users.user_name()
     if not memes.meme_get(meme_id):
         return render_template('error.html', message='Meme not found.')
     else:
         meme_data = memes.meme_get(meme_id)
         meme_comments = memes.meme_get_comments(meme_id)
-        return render_template('meme.html', meme_data=meme_data, meme_comments=meme_comments)
+        return render_template('meme.html', username=username, meme_data=meme_data, meme_comments=meme_comments)
 
