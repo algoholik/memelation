@@ -41,7 +41,6 @@
 
 <hr>
 
-{% if session.user_id %}
 
 <table>
     {% for comment in meme_comments %}
@@ -54,6 +53,8 @@
 </table>
 
 <hr>
+
+{% if session.user_id %}
 
 <form action="/comment" method="POST">
     <p>Your comment: <input id="commentfield" type="text" name="comment"></p>
