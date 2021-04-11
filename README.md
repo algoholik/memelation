@@ -1,9 +1,22 @@
 # Memelation
 A simple image board for sharing and discussing memes.
 
-*Live demo:* https://memelation.herokuapp.com/
+Live demo: https://memelation.herokuapp.com/
 
-## Preliminary features:
+Current features (as on 11.04.2021):
+* User can create an account 
+  * username & password only for now...
+  * ...
+* User can login (with u/p)
+* User can upload images with a comment
+* User can view submitted memes
+* User can post comments to memes
+* User can view a list of other users
+* User can view a user's profile page
+* User can view a random meme
+
+
+## Originally planned preliminary features:
 
 * User can create an account, and sign in and out from the service
 * Inside the app, user can:
