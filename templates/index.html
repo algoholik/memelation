@@ -24,7 +24,7 @@
     <h1>Memelation</h1>
 <hr>
 
-{% if session.user_id %}
+
 Total of {{ count }} memes sent.
 
 <table>
@@ -37,6 +37,8 @@ Total of {{ count }} memes sent.
 {% endfor %}
 </table>
 <hr/>
+
+{% if session.user_id %}
 
 Logged in as {{ username }}.
 <form action="/send" method="POST" enctype="multipart/form-data">
