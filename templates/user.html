@@ -1,3 +1,28 @@
+<html>
+    <head>
+        <title>Memelation</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
+       </head>
+    <body>
+
+<div class="navbar">
+    <ul>
+        <li><a href="/">Memelation</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
+        {% if session.user_id %}
+        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
+        {% else %}
+        <li style="float:right"><a href="/register">Create account</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="main">
+
+{% if session.user_id %}
+
 <h3>{{ userdata['user'][1] }}</h3>
 
 <hr>
@@ -18,6 +43,8 @@
     </tr>
 </table>
 
+<hr>
+
 <table>
     <thead><strong>MEMES SUBMITTED</strong></thead>
     {% for meme in userdata['memes'] %}
@@ -26,7 +53,8 @@
         <td>
             <p>
                 <strong><a href="/meme/{{ meme[0] }}">{{ meme[1] }}</a></strong><br>
-                {{ meme[2] }}
+                {{ meme[2] }}<br>
+                {{ meme[3 ]}}
             </p>
         </td>
     </tr>
@@ -35,8 +63,11 @@
 
 <hr>
 
-{% if session.user_id %}
 <a href="/">Back home</a> | <a href="/logout">Logout</a>
 {% else %}
 <a href="/">Login</a>
 {% endif %}
+
+</div>
+</body>
+</html>

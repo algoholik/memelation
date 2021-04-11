@@ -11,12 +11,25 @@ def index():
 @app.route('/users')
 def users_list():
     userlist = users.get_users()
-    return render_template('users.html', usercount=len(userlist), users=userlist)
+    username = users.user_name()
+    return render_template('users.html', username=username, usercount=len(userlist), users=userlist)
 
 @app.route('/user/<int:user_id>')
 def user_profile(user_id):
     userdata = users.get_user_profile(user_id)
     return render_template('user.html', userdata=userdata)
+
+@app.route("/comment", methods=["POST"])
+def comment():
+    comment = request.form["comment"]
+    meme_id = request.form["meme_id"]
+    if len(comment) > 0:
+        if memes.meme_add_comment(meme_id, comment):
+            return redirect(f"/meme/{meme_id}")
+        else:
+            return "Failed to add comment to database."
+    else:
+        return render_template('meme.html', msg_commentfailed='Your comment must contain text!')
 
 @app.route("/send", methods=['POST'])
 def send():
@@ -24,10 +37,11 @@ def send():
     imgupload = request.files["file"]
     img_filename = imgupload.filename
     img_data = imgupload.read()
-    if not img_filename.endswith(".jpg"): return "Only jpg files allowed."
+    if not img_filename.endswith((".jpg", ".jpeg", ".png", ".gif")): 
+        return "JPG, PNG or GIF files only plz."
     if len(img_data) > 1024 * 1024: return "Your meme is too heavy! Whydontcha downsize it a bit (or two)?"
     meme_id = memes.send(img_data, img_filename, content)
-    return redirect(f'/meme/{meme_id}')
+    return redirect(f"/meme/{meme_id}")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -71,5 +85,6 @@ def meme_show(meme_id):
         return render_template('error.html', message='Meme not found.')
     else:
         meme_data = memes.meme_get(meme_id)
-        return render_template('meme.html', meme_data=meme_data)
+        meme_comments = memes.meme_get_comments(meme_id)
+        return render_template('meme.html', meme_data=meme_data, meme_comments=meme_comments)
 

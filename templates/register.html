@@ -1,8 +1,40 @@
-<h3>Register</h3>
+<html>
+    <head>
+        <title>Memelation</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
+        <script>
+            window.onload = function() {
+            document.getElementById("commentfield").focus();
+            };
+        </script>
+    </head>
+    <body>
+
+<div class="navbar">
+    <ul>
+        <li><a href="/">Memelation</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
+        {% if session.user_id %}
+        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
+        {% else %}
+        <li style="float:right"><a href="/register">Create account</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="main">
+
+<h1>Create account</h1>
 <form action="/register" method="post">
-    Tunnus: <input type="text" name="username">
+    Username: <input type="text" name="username">
     <p>
-    Salasana: <input type="password" name="password">
+    Password: <input type="password" name="password">
     <p>
-    <input type="submit" value="Luo tunnus">
+    <input type="submit" value="Create">
 </form>
+
+</div>
+</body>
+</html>

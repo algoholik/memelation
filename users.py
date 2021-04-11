@@ -35,7 +35,7 @@ def user_name():
     return session.get('username', 0)
 
 def get_users():
-    sql = 'SELECT U.username, U.created FROM users U'
+    sql = 'SELECT U.username, U.created, U.id FROM users U'
     result = database.session.execute(sql).fetchall()
     return result
     #return result.fetchall()

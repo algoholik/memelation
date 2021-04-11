@@ -27,5 +27,23 @@ def meme_get(meme_id):
         result = database.session.execute(sql, {'id': meme_id})
         return result.fetchone()
     except:
-        print("ei löydy")
+        return False
+
+def meme_get_comments(meme_id):
+    try:
+        sql = 'SELECT U.username, C.id, C.user_id, C.meme_id, C.content, C.created FROM users U, comments C WHERE U.id=C.user_id AND C.meme_id=:meme_id'
+        result = database.session.execute(sql, {'meme_id': meme_id}).fetchall()
+        return result
+    except:
+        return False
+
+def meme_add_comment(meme_id, content):
+    user_id = users.user_id()
+    visible = True
+    try:
+        sql = 'INSERT INTO comments (user_id, meme_id, content, visible, created) VALUES (:user_id, :meme_id, :content, :visible, NOW())'
+        database.session.execute(sql, {'user_id': user_id, 'meme_id': meme_id, 'content': content, 'visible': visible})
+        database.session.commit()
+        return True
+    except:
         return False

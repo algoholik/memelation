@@ -1,3 +1,26 @@
+<html>
+    <head>
+        <title>Memelation</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
+       </head>
+    <body>
+
+<div class="navbar">
+    <ul>
+        <li><a href="/">Memelation</a></li>
+        <li><a class="active" href="/users">Users</a></li>
+        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
+        {% if session.user_id %}
+        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
+        {% else %}
+        <li style="float:right"><a href="/register">Create account</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="main">
+
 <h3>Users</h3>
 Total of {{ usercount }} registered users.
 
@@ -5,12 +28,12 @@ Total of {{ usercount }} registered users.
 
 <table>
 <tr>
-<td>username:</td>
-<td>profile created:</td>
+<td><strong>User</strong></td>
+<td><strong>Profile created</strong></td>
 </tr>
 {% for user in users %}
 <tr>
-<td>{{ user[0] }}</td>
+<td><strong><a href="/user/{{ user[2] }}">{{ user[0] }}</a></strong></td>
 <td>{{ user[1].strftime("%Y-%m-%d %H:%M:%S") }}</td>
 </tr>
 {% endfor %}
@@ -23,3 +46,7 @@ Total of {{ usercount }} registered users.
 {% else %}
 <a href="/">Login</a>
 {% endif %}
+
+</div>
+</body>
+</html>

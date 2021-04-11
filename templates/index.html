@@ -1,4 +1,27 @@
-<h1>Memelation</h1>
+<html>
+    <head>
+        <title>Memelation</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
+    </head>
+    <body>
+
+<div class="navbar">
+    <ul>
+        <li><a class="active" href="/">Memelation</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
+        {% if session.user_id %}
+        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
+        {% else %}
+        <li style="float:right"><a href="/register">Create account</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="main">
+
+    <h1>Memelation</h1>
 <hr>
 
 {% if session.user_id %}
@@ -46,3 +69,8 @@ Logged in as {{ username }}.
 No account? <a href="/register">Register</a>
 
 {% endif %}
+
+</div>
+
+</body>
+</html>
