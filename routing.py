@@ -1,7 +1,9 @@
 from app import app
-from flask import render_template, make_response, request, redirect
+import memes
+import users
+import re
+from flask import (render_template, make_response, request, redirect)
 from random import randint
-import memes, users
 
 @app.route('/')
 def index():
@@ -70,10 +72,18 @@ def register():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
-        if users.register(username, password):
-            return redirect('/')
-        else:
-            return render_template('error.html', message='Registration failed.')
+        username_ok = re.fullmatch(r'[A-Za-z0-9]{6,}', password)
+        password_ok = re.fullmatch(r'[A-Za-z0-9@#$!_-.,%^&+=]{8,}', password)
+        if username_ok and password_ok:
+            if users.register(username, password):
+                return redirect('/', message='Registration succesful!')
+            else:
+                return render_template('error.html', message=f'User {username} already exists. Pick a new one!')
+        elif username_ok and not password_ok:
+            return render_template('error.html', message='Password not good enough!')
+        elif not username_ok and password_ok:
+            return render_template('error.html', message='Username length must be at least 8 characters and can contain only letters from a-z, A-Z and numbers from 0-9.!')
+            
 
 @app.route('/meme/random')
 def meme_random():

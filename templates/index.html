@@ -39,7 +39,7 @@
 
 {% if session.user_id %}
 
-Logged in as {{ username }}.
+{{ message }} Logged in as {{ username }}.
 <h2>Submit a meme:</h2>
 <form action="/send" method="POST" enctype="multipart/form-data">
 <table>
