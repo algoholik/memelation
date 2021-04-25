@@ -3,7 +3,14 @@ import memes
 import users
 import re
 from flask import (render_template, make_response, request, redirect)
+from flask.ext.navigation import Navigation
 from random import randint
+
+app.Bar('navbar', [
+    app.Item('Memelation', 'index'),
+    app.Item('Users', 'users'),
+    app.Item('Random', 'random'),
+])
 
 @app.route('/')
 def index():
@@ -72,17 +79,19 @@ def register():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
-        username_ok = re.fullmatch(r'[A-Za-z0-9]{6,}', password)
-        password_ok = re.fullmatch(r'[A-Za-z0-9@#$!_-.,%^&+=]{8,}', password)
+        username_ok = len(username) >= 6
+        password_ok = len(password) >= 8
+        print(username_ok)
+        print(password_ok)
         if username_ok and password_ok:
             if users.register(username, password):
-                return redirect('/', message='Registration succesful!')
+                return render_template('welcome.html', message='Hi there! Welcome to Memelation...')
             else:
-                return render_template('error.html', message=f'User {username} already exists. Pick a new one!')
+                return render_template('error.html', message='User already exists. Pick a new one!')
         elif username_ok and not password_ok:
-            return render_template('error.html', message='Password not good enough!')
+            return render_template('error.html', message='Minimum password length is 8 characters!')
         elif not username_ok and password_ok:
-            return render_template('error.html', message='Username length must be at least 8 characters and can contain only letters from a-z, A-Z and numbers from 0-9.!')
+            return render_template('error.html', message='Username length must be at least 6 characters and can contain only letters from a-z, A-Z and numbers from 0-9.!')
             
 
 @app.route('/meme/random')

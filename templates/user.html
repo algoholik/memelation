@@ -1,7 +1,6 @@
 <html>
     <head>
         <title>Memelation</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/normalize.css') }}">
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
        </head>
     <body>
@@ -40,7 +39,7 @@
     </tr>
     <tr>
         <td>profile created:</td>
-        <td>{{ userdata['user'][2].strftime("%Y-%m-%d %H:%M") }}</td>
+        <td>{{ userdata['user'][2].strftime("%d.%m.%Y") }}</td>
     </tr>
 </table>
 
@@ -55,7 +54,7 @@
             <p>
                 <strong><a href="/meme/{{ meme[0] }}">{{ meme[1] }}</a></strong><br>
                 {{ meme[2] }}<br>
-                {{ meme[3 ]}}
+                <strong>{{ meme[3].strftime("%d.%m.%Y") }}</strong> {{ meme[3].strftime("(%H:%M)") }}
             </p>
         </td>
     </tr>
