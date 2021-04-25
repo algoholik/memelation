@@ -5,7 +5,26 @@
     </head>
     <body>
 
-{% include 'navigation.html' %}
+<div class="navbar">
+    <ul>
+        <li><a class="active" href="/">Memelation</a></li>
+        <li><a href="/meme/random">Random</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
+        {% if session.user_id %}
+        <li style="float:right">Logged in as {{ username }} <a href="/logout">(<u>Logout</u>)</a></li>
+        {% else %}
+        <div class="login-container">
+            <form action="/login" method="POST">
+              <input type="text" placeholder="Username" name="username">
+              <input type="password" placeholder="Password" name="password">
+              <button type="submit">Login</button>
+            </form>
+        </div>
+        <li style="float:right"><a href="/register">Sign up</a></li>
+        {% endif %}
+    </ul>
+</div>
 
 <div class="main">
 
@@ -48,15 +67,6 @@
 
 {% else %}
 
-<h3>Login</h3>
-
-<form action="/login" method="POST">
-    <p>Username: <input type="text" name="username">
-    <p>Password: <input type="password" name="password">
-    <p><input type="submit" value="Login">
-    <p>{{ msg_loginfailed }}
-</form>
-<hr/>
 No account? <a href="/register">Register</a>
 
 {% endif %}
