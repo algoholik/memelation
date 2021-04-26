@@ -2,7 +2,6 @@ from app import app
 import memes
 import users
 import re
-import imghdr
 from flask import (render_template, make_response, request, redirect)
 from random import randint
 
@@ -43,7 +42,6 @@ def send():
     imgupload = request.files["file"]
     img_filename = imgupload.filename
     img_data = imgupload.read()
-    print(imghdr.what(img_data))
     if not img_filename.endswith((".jpg", ".jpeg", ".png", ".gif")): 
         return "JPG, PNG or GIF files only plz."
     if len(img_data) > 1024 * 1024: return "Your meme is too heavy! Whydontcha downsize it a bit (or two)?"
