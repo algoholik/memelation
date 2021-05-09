@@ -4,13 +4,13 @@
 
 <h1>Create account</h1>
 <form action="/signup" method="post">
-    <label for="username">Username (letters and numbers only, no punctuation or special characters)</label>
-        <input type="text" id="username" name="username" pattern="[A-Za-z0-9]+.{6,}">
-    <p>
-        <label for="password">Password (Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters)</label>
+    <p><label for="username"><strong>Username</strong></label></p>
+    <p><input type="text" id="username" name="username" pattern="[A-Za-z0-9]+.{6,}"></p>
+    <p>(At least 6 characters, letters and numbers only, no punctuation or special characters)</p>
+    <p><label for="password"><strong>Password</strong></label></p>
         <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-    <p>
-    <input type="submit" value="Create">
+    <p>(Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters)</p>
+    <p><input type="submit" value="Create"></p>
 </form>
 
 {% endblock %}
