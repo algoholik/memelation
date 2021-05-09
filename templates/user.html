@@ -1,25 +1,6 @@
-<html>
-    <head>
-        <title>Memelation</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
-       </head>
-    <body>
-
-<div class="navbar">
-    <ul>
-        <li><a href="/">Memelation</a></li>
-        <li><a href="/meme/random">Random meme</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
-        {% if session.user_id %}
-        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
-        {% else %}
-        <li style="float:right"><a href="/register">Create account</a></li>
-        {% endif %}
-    </ul>
-</div>
-
-<div class="main">
+{% extends "layout.html" %}
+{% block title %}{{ userdata['user'][1] }}{% endblock %}
+{% block content %}
 
 {% if session.user_id %}
 
@@ -67,10 +48,8 @@
 {% else %}
 <p>
 <a href="/">Login</a> to view users' profiles.<br>
-No account? <a href="/register">Create one here!</a>
+No account? <a href="/signup">Create one here!</a>
 </p>
 {% endif %}
 
-</div>
-</body>
-</html>
+{% endblock %}

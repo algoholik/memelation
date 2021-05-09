@@ -1,31 +1,13 @@
-<html>
-    <head>
-        <title>Memelation</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
-       </head>
-    <body>
-
-<div class="navbar">
-    <ul>
-        <li><a href="/">Memelation</a></li>
-        <li><a href="/meme/random">Random meme</a></li>
-        <li><a class="active" href="/users">Users</a></li>
-        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
-        {% if session.user_id %}
-        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
-        {% else %}
-        <li style="float:right"><a href="/register">Create account</a></li>
-        {% endif %}
-    </ul>
-</div>
-
-<div class="main">
+{% extends "layout.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
 
 <h3>Users</h3>
-Total of {{ usercount }} registered users.
+Memelation has a total of {{ usercount }} registered users.
 
 <hr>
 
+{% if session.user_id %}
 <table>
 <tr>
 <td><strong>User</strong></td>
@@ -40,13 +22,8 @@ Total of {{ usercount }} registered users.
 </table>
 
 <hr>
-
-{% if session.user_id %}
-<a href="/">Back home</a> | <a href="/logout">Logout</a>
 {% else %}
-<a href="/">Login</a>
+<p>Log in or <a href="/signup">sign up</a> to view users!</p>
 {% endif %}
 
-</div>
-</body>
-</html>
+{% endblock %}

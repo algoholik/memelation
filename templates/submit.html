@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Submit Meme{% endblock %}
+{% block content %}
+
+{% if session.user_id %}
+
+<h2>Submit Meme:</h2>
+
+<form action="/send" method="POST" enctype="multipart/form-data">
+<table>
+<tr>
+    <td>
+        <p>Select a file from your computer:</p>
+        <input type="file" name="file" value="Select a meme to upload">
+    </td>
+</tr>
+    <tr>
+    <td>
+        <p>Add tagwords (separate, them, like, this):</p>
+        <textarea name="content" rows="2" cols="40" placeholder="doge, ebin, spurdo"></textarea>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </td>
+</tr>
+<tr>
+    <td><input type="submit" value="Submit your meme"></td>
+</tr>
+</table>
+</form>
+
+{% else %}
+<h2>Submit Meme</h2>
+<p>Log in or <a href="/signup">sign up</a> to submit memes and comment on them!</p>
+{% endif %}
+
+{% endblock %}

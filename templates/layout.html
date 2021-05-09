@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Memelation - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
+    </head>
+    <body>
+
+<div class="navbar">
+    <ul>
+        <li><a class="logo" href="/">Memelation</a></li>
+        {% if session.user_id %}
+        <!-- Hide signup -->
+        {% else %}
+        <li><a href="/signup">Sign Up</a></li>
+        {% endif %}
+        <li><a href="/submit">Submit</a></li>
+        <li><a href="/meme/random">Random</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/search">Search</a></li>
+        {% if session.user_id %}
+        <div class="login-container">
+            You are logged in <a href="/profile"><u>Profile</u> <a href="/logout"><u>Logout</u>)</a>
+        </div>
+        {% else %}
+        <div class="login-container">
+            <form action="/login" method="POST">
+              <input type="text" placeholder="Username" name="username">
+              <input type="password" placeholder="Password" name="password">
+              <button type="submit">Login</button>
+            </form>
+        </div>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="main">
+{% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

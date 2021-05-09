@@ -1,48 +1,23 @@
-<html>
-    <head>
-        <title>Memelation</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
-        <script>
-            window.onload = function() {
-            document.getElementById("commentfield").focus();
-            };
-        </script>
-    </head>
-    <body>
-
-<div class="navbar">
-    <ul>
-        <li><a href="/">Memelation</a></li>
-        <li><a href="/meme/random">Random meme</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
-        {% if session.user_id %}
-        <li style="float:right"><a href="/logout">Logged in as {{ username }} (<u>Logout</u>)</a></li>
-        {% else %}
-        <li style="float:right"><a href="/register">Create account</a></li>
-        {% endif %}
-    </ul>
-</div>
-
-<div class="main">
-
+{% extends "layout.html" %}
+{% block title %}Submit New Meme{% endblock %}
+{% block content %}
 
 <h3>Meme #{{ meme_data[0] }}</h3>
 
-<hr/>
+<hr>
 <img src="/meme/img/{{ meme_data[0] }}" height="400"/>
 <br/>
 <a href="/meme/img/{{ meme_data[0] }}">{{ meme_data[1] }}</a> | 
 {{meme_data[4].strftime("%Y-%m-%d %H:%M" )}} | 
 <a href="/user/{{ meme_data[3] }}">({{ meme_data[5] }}</a>)
 <br/>
-"{{ meme_data[2] }}"
+Keywords: {{ meme_data[2] }}
 <br/>
 
 <hr>
 
-
 <table>
+    <tr><td colspan="3"><p><strong>Comments:</strong></p></td></tr>
     {% for comment in meme_comments %}
     <tr>
         <td>{{ comment[5].strftime("%Y-%m-%d %H:%M") }}</td>
@@ -56,25 +31,21 @@
 
 {% if session.user_id %}
 
+<script> window.onload = function() {document.getElementById("commentfield").focus();};</script>
 <form action="/comment" method="POST">
-    <p>Your comment: <input id="commentfield" type="text" name="comment"></p>
-    <p><input type="submit" value="Send"></p>
-    <p>{{ msg_commentfailed }}</p>
+    <p style="color: red">{{ error_msg }}</p>
+    <p>
+        Your comment: 
+        <input id="commentfield" type="text" name="comment">
+        <input type="submit" value="Send">
+    </p>
     <input type="hidden" name="meme_id" value="{{ meme_data[0] }}">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% else %}
-<p>Log in to see comments and post your own.</p>
+<p>Log in or <a href="/signup">sign up</a> to post comments!</p>
 {% endif %}
 
 <hr>
 
-{% if session.user_id %}
-<a href="/">Back home</a> | <a href="/logout">Logout</a>
-{% else %}
-<a href="/">Login</a>
-{% endif %}
-
-</div>
-</body>
-</html>
+{% endblock %}

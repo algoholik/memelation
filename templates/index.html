@@ -1,36 +1,26 @@
-<html>
-    <head>
-        <title>Memelation 0.3.0</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/memelation.css') }}">
-    </head>
-    <body>
+{% extends "layout.html" %}
+{% block title %}Front page{% endblock %}
+{% block content %}
 
-<div class="navbar">
-    <ul>
-        <li><a class="active" href="/">Memelation</a></li>
-        <li><a href="/meme/random">Random</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a class="comingsoon" href="#">Search (coming soon)</a></li>
-        {% if session.user_id %}
-        <li style="float:right">Logged in as {{ username }} <a href="/logout">(<u>Logout</u>)</a></li>
-        {% else %}
-        <div class="login-container">
-            <form action="/login" method="POST">
-              <input type="text" placeholder="Username" name="username">
-              <input type="password" placeholder="Password" name="password">
-              <button type="submit">Login</button>
-            </form>
-        </div>
-        <li style="float:right"><a href="/register">Sign up</a></li>
-        {% endif %}
-    </ul>
-</div>
 
-<div class="main">
-
-    <h1>Memelation</h1>
-    <strong>Total of {{ count }} memes submitted.</strong>
+<h1>Memelation</h1>
+<strong>Total of {{ count }} memes submitted.</strong>
 <hr>
+
+{% for meme in memes %}
+<div class="responsive">
+    <div class="gallery">
+        <a href="/meme/{{meme[3]}}">
+        <img src="/meme/img/{{meme[3]}}" alt="{{ meme[1] }}" class="imgfit">
+        </a>
+        <div class="desc">
+            <p><a href="/user/{{meme[4]}}">{{ meme[1] }}</a></p>
+            <p>{{ meme[2].strftime("%Y-%m-%d %H:%M") }}</p>
+            <p><a href="/meme/{{meme[3]}}">{{ meme[0] }}</a></p>
+        </div>
+    </div>
+</div>
+{% endfor %}
 
 <table>
 {% for meme in memes %}
@@ -43,36 +33,4 @@
 </table>
 <hr/>
 
-{% if session.user_id %}
-
-{{ message }} Logged in as {{ username }}.
-<h2>Submit a meme:</h2>
-<form action="/send" method="POST" enctype="multipart/form-data">
-<table>
-<tr>
-    <td><input type="file" name="file" value="Upload a meme"></td>
-</tr>
-    <tr>
-    <td colspan="2">
-        Message:
-        <textarea name="content" rows="3" cols="40"></textarea>
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    </td>
-</tr>
-<tr>
-    <td><input type="submit" value="Send"></td>
-</tr>
-</table>
-</form>
-<br/><a href="/users">Users</a> | <a href="/logout">Logout</a>
-
-{% else %}
-
-No account? <a href="/register">Register</a>
-
-{% endif %}
-
-</div>
-
-</body>
-</html>
+{% endblock %}

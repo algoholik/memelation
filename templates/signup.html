@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+
+<h1>Create account</h1>
+<form action="/register" method="post">
+    <label for="username">Username (letters and numbers only, no punctuation or special characters)</label>
+        <input type="text" id="username" name="username" pattern="[A-Za-z0-9]+.{6,}">
+    <p>
+        <label for="password">Password (Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters)</label>
+        <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+    <p>
+    <input type="submit" value="Create">
+</form>
+
+{% endblock %}

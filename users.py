@@ -12,13 +12,12 @@ def login(username, password):
         if check_password_hash(user[0], password):
             session['user_id'] = user[1]
             session['username'] = user[2]
-            session["csrf_token"] = secrets.token_hex(16)
+            session['csrf_token'] = secrets.token_hex(16)
             return True
         else: return False
 
 def logout():
     del session['user_id']
-    del session["csrf_token"]
 
 def register(username, password):
     hash_value = generate_password_hash(password)
@@ -37,11 +36,13 @@ def user_id():
 def user_name():
     return session.get('username', 0)
 
+def csrf_token():
+    return session.get('csrf_token', 0)
+
 def get_users():
     sql = 'SELECT U.username, U.created, U.id FROM users U'
     result = database.session.execute(sql).fetchall()
     return result
-    #return result.fetchall()
 
 def get_user_profile(user_id):
     userdata = { 'user': None, 'profile': None, 'memes': None, 'comments': None }
@@ -53,5 +54,4 @@ def get_user_profile(user_id):
     userdata['memes'] = database.session.execute(sql, {'user_id': user_id}).fetchall()
     sql = 'SELECT meme_id, content, created FROM comments WHERE user_id=:user_id'
     userdata['comments'] = database.session.execute(sql, {'user_id': user_id}).fetchall()
-    print(userdata)
     return userdata
