@@ -25,6 +25,8 @@ def user_profile(user_id):
 
 @app.route("/comment", methods=["POST"])
 def comment():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     comment = request.form["comment"]
     meme_id = request.form["meme_id"]
     username = users.user_name()
@@ -38,6 +40,8 @@ def comment():
 
 @app.route("/send", methods=['POST'])
 def send():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     content = request.form['content']
     imgupload = request.files["file"]
     img_filename = imgupload.filename
@@ -85,7 +89,6 @@ def register():
             return render_template('error.html', message='Minimum password length is 8 characters!')
         elif not username_ok and password_ok:
             return render_template('error.html', message='Username length must be at least 6 characters and can contain only letters from a-z, A-Z and numbers from 0-9.!')
-            
 
 @app.route('/meme/random')
 def meme_random():

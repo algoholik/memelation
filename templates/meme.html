@@ -61,6 +61,7 @@
     <p><input type="submit" value="Send"></p>
     <p>{{ msg_commentfailed }}</p>
     <input type="hidden" name="meme_id" value="{{ meme_data[0] }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% else %}
 <p>Log in to see comments and post your own.</p>
