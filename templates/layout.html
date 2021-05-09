@@ -16,7 +16,15 @@
         <li><a href="/submit">Submit</a></li>
         <li><a href="/meme/random">Random</a></li>
         <li><a href="/users">Users</a></li>
-        <li><a href="/search">Search</a></li>
+        <li>
+            <div class="search-container">
+                <form action="/search" method="GET">
+                  <input type="text" placeholder="Search for memes..." name="search_query">
+                  <button type="submit">Search</button>
+                </form>
+            </div>    
+        </li>
+        <!-- <li><a href="/search">Search</a></li> -->
         {% if session.user_id %}
         <div class="login-container">
             You are logged in <a href="/profile"><u>Profile</u> <a href="/logout"><u>Logout</u>)</a>

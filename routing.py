@@ -3,7 +3,7 @@ import memes
 import users
 import re
 from flask import (render_template, make_response, request, redirect)
-from random import randint
+import random
 import secrets
 
 @app.route('/')
@@ -11,10 +11,18 @@ def index():
     list = memes.get_list()
     return render_template('index.html', username=users.user_name(), count=len(list), memes=list)
 
+
+@app.route('/tag/<tagword>')
+def tag_show(tagword):
+    tag_word = tagword
+    tag_results = memes.get_tags(tagword)
+    tag_amt = len(tag_results)
+    return render_template('tag.html', tag_word=tag_word, tag_amt=tag_amt, tag_results=tag_results)
+
 @app.route('/search')
 def meme_search():
     query = request.args['query']
-    results = memes.meme_get_comments()
+    results = memes.meme_search(query)
 
 @app.route('/submit')
 def submit_page():
@@ -45,7 +53,7 @@ def comment():
         else:
             return "Failed to add comment to database."
     else:
-        error_msg = "Your comment was too short! As in 0 characters. Were you kidding?"
+        error_msg = "Your comment was too short!"
         meme_data = memes.meme_get(meme_id)
         meme_comments = memes.meme_get_comments(meme_id)
         return render_template('meme.html', username=username, meme_data=meme_data, meme_comments=meme_comments, error_msg=error_msg)
@@ -55,13 +63,14 @@ def send():
     if request.form['csrf_token'] != users.csrf_token():
         return render_template('error.html', message='Unauthorized form submission.')
     content = request.form['content']
+    tagwords = request.form['tagwords']
     imgupload = request.files["file"]
     img_filename = imgupload.filename.lower()
     img_data = imgupload.read()
     if not img_filename.endswith(('.jpg', '.jpeg', '.png', '.gif')): 
         return "JPG, PNG or GIF files only plz."
     if len(img_data) > 1024 * 1024: return "Your meme is too heavy! Whydontcha downsize it a bit (or two)?"
-    meme_id = memes.send(img_data, img_filename, content)
+    meme_id = memes.send(img_data, img_filename, content, tagwords)
     return redirect(f"/meme/{meme_id}")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -104,7 +113,7 @@ def register():
 
 @app.route('/meme/random')
 def meme_random():
-    random_id = randint(1, memes.get_meme_amount())
+    random_id = random.choice(memes.get_active_meme_ids())
     return redirect(f"/meme/{random_id}")
 
 @app.route('/meme/img/<int:meme_id>')
@@ -118,9 +127,10 @@ def meme_img(meme_id):
 def meme_show(meme_id):
     username = users.user_name()
     if not memes.meme_get(meme_id):
-        return render_template('error.html', message='Meme not found.')
+        return render_template('error.html', message=f'Meme #{meme_id} not found.')
     else:
         meme_data = memes.meme_get(meme_id)
+        meme_tags = memes.meme_get_tags(meme_id)
         meme_comments = memes.meme_get_comments(meme_id)
-        return render_template('meme.html', username=username, meme_data=meme_data, meme_comments=meme_comments)
+        return render_template('meme.html', username=username, meme_data=meme_data, meme_tags=meme_tags, meme_comments=meme_comments)
 

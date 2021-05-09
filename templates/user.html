@@ -2,9 +2,11 @@
 {% block title %}{{ userdata['user'][1] }}{% endblock %}
 {% block content %}
 
-{% if session.user_id %}
+
 
 <h3>{{ userdata['user'][1] }}</h3>
+
+{% if session.user_id %}
 
 <hr>
 
@@ -42,14 +44,8 @@
     {% endfor %}
 </table>
 
-<hr>
-
-<a href="/">Back home</a> | <a href="/logout">Logout</a>
 {% else %}
-<p>
-<a href="/">Login</a> to view users' profiles.<br>
-No account? <a href="/signup">Create one here!</a>
-</p>
+<p>Log in or <a href="/signup">sign up</a> to view user profiles!</p>
 {% endif %}
 
 {% endblock %}

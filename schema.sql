@@ -22,14 +22,6 @@ CREATE TABLE memes (
     img_data BYTEA
 );
 
-CREATE TABLE ratings (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users,
-    meme_id INTEGER REFERENCES memes,
-    points INTEGER DEFAULT 0,
-    created TIMESTAMP
-);
-
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
@@ -42,8 +34,7 @@ CREATE TABLE comments (
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
     tagword TEXT UNIQUE NOT NULL,
-    visible BOOLEAN DEFAULT TRUE,
-    created TIMESTAMP
+    visible BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE tagging (

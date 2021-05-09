@@ -22,15 +22,5 @@
 </div>
 {% endfor %}
 
-<table>
-{% for meme in memes %}
-<tr>
-    <td>{{ meme[2].strftime("%Y-%m-%d %H:%M") }}</td>
-    <td><a href="/user/{{meme[4]}}">{{ meme[1] }}</a></td>
-    <td><a href="/meme/{{meme[3]}}">{{ meme[0] }}</a></td>
-</tr>
-{% endfor %}
-</table>
-<hr/>
 
 {% endblock %}

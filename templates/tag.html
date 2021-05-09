@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Tag Search{% endblock %}
+{% block content %}
+
+
+<table>
+    <thead><h2>{{ tag_amt }} memes with tagword #{{ tag_word }}:</h2></thead>
+    {% for result in tag_results %}
+    <tr>
+        <td><a href="/meme/{{ result[3] }}"><img src="/meme/img/{{ result[3] }}" height="100"></a></td>
+        <td>
+            <p>
+                <strong><a href="/meme/{{ result[3] }}">{{ result[0] }}</a></strong><br>
+                {{ result[1] }}<br>
+                <strong>{{ result[2].strftime("%d.%m.%Y") }}</strong> {{ result[2].strftime("(%H:%M)") }}
+            </p>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+        
+
+{% endblock %}

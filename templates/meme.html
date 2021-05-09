@@ -8,12 +8,12 @@
 <img src="/meme/img/{{ meme_data[0] }}" height="400"/>
 <br/>
 <a href="/meme/img/{{ meme_data[0] }}">{{ meme_data[1] }}</a> | 
-{{meme_data[4].strftime("%Y-%m-%d %H:%M" )}} | 
+{{meme_data[4].strftime("%Y-%m-%d %H:%M")}} | 
 <a href="/user/{{ meme_data[3] }}">({{ meme_data[5] }}</a>)
 <br/>
-Keywords: {{ meme_data[2] }}
+Description: {{ meme_data[2] }}
 <br/>
-
+Tagwords: {% for tag in meme_tags %} <a href="/tag/{{tag}}">#{{tag}}</a>&nbsp; {% endfor %}
 <hr>
 
 <table>
