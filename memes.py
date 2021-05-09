@@ -15,6 +15,16 @@ def get_list():
     return result.fetchall()
 
 
+def add_view(meme_id):
+    sql = '''INSERT INTO views (meme_id, created) VALUES (:meme_id, NOW())'''
+    database.session.execute(sql, {'meme_id': meme_id})
+
+
+def get_views(meme_id):
+    sql = '''SELECT COUNT(:meme_id) FROM views'''
+    result = database.session.execute(sql, {'meme_id': meme_id})
+    print(result)
+
 
 def get_tags(tagword):
     tag_word = tagword.replace("#","").replace(".", "").replace(",", "").strip()
@@ -164,20 +174,3 @@ def meme_add_comment(meme_id, content):
         return True
     except:
         return False
-
-
-
-def meme_search(search_query):
-    search_words = [
-        w.replace("#", "").replace(".", "").replace(",", "").strip() 
-        for w 
-        in search_query.split(" ") 
-        if tag.startswith("#")
-    ]
-    sql = '''
-        SELECT M.content, U.username, M.created, M.id, U.id, 
-        FROM memes M, users U, tags T 
-        WHERE M.user_id=U.id 
-        ORDER BY M.id
-    '''
-    result = database.session.execute(sql)

@@ -19,11 +19,6 @@ def tag_show(tagword):
     tag_amt = len(tag_results)
     return render_template('tag.html', tag_word=tag_word, tag_amt=tag_amt, tag_results=tag_results)
 
-@app.route('/search')
-def meme_search():
-    query = request.args['query']
-    results = memes.meme_search(query)
-
 @app.route('/submit')
 def submit_page():
     return render_template('submit.html')
@@ -129,8 +124,10 @@ def meme_show(meme_id):
     if not memes.meme_get(meme_id):
         return render_template('error.html', message=f'Meme #{meme_id} not found.')
     else:
+        memes.add_view(meme_id)
         meme_data = memes.meme_get(meme_id)
         meme_tags = memes.meme_get_tags(meme_id)
         meme_comments = memes.meme_get_comments(meme_id)
+        memes.get_views(meme_id)
         return render_template('meme.html', username=username, meme_data=meme_data, meme_tags=meme_tags, meme_comments=meme_comments)
 
