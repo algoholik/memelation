@@ -15,16 +15,6 @@ def get_list():
     return result.fetchall()
 
 
-def add_view(meme_id):
-    sql = '''INSERT INTO views (meme_id, created) VALUES (:meme_id, NOW())'''
-    database.session.execute(sql, {'meme_id': meme_id})
-
-
-def get_views(meme_id):
-    sql = '''SELECT COUNT(:meme_id) FROM views'''
-    result = database.session.execute(sql, {'meme_id': meme_id})
-    print(result)
-
 
 def get_tags(tagword):
     tag_word = tagword.replace("#","").replace(".", "").replace(",", "").strip()
